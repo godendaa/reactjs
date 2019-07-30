@@ -32,9 +32,16 @@ class App extends Component {
 		});
 	};
 	render() {
+		const style = {
+			border: "5px solid black"
+		};
 		return (
 			<div className="App">
-				<UserInput changed={this.usernameChangedHandler} />
+				<UserInput
+					style={style}
+					changed={this.usernameChangedHandler}
+					username={this.state.users[0].username}
+				/>
 				<UserOutput
 					username={this.state.users[0].username}
 					loggedIn={this.state.users[0].name}

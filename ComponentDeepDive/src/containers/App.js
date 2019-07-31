@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import classes from "./App.css";
 import Persons from "../components/Persons/Persons";
 import Cockpit from "../components/Cockpit/Cockpit";
+import withClass from "../hoc/withClass";
+import Aux from "../hoc/Aux";
 
 class App extends Component {
 	constructor(props) {
@@ -44,7 +46,8 @@ class App extends Component {
 		],
 		otherState: "some other value",
 		showPersons: false,
-		showCockpit: true
+		showCockpit: true,
+		counter: 0
 	};
 
 	nameChangedHandler = (event, id) => {
@@ -58,7 +61,9 @@ class App extends Component {
 		person.name = event.target.value;
 		const persons = [...this.state.persons];
 		persons[personIndex] = person;
-		this.setState({ persons: persons });
+		this.setState((prevState, prop) => {
+			return { persons: persons, counter: prevState.counter + 1 };
+		});
 	};
 
 	deletePersonHandler = personIndex => {
@@ -88,7 +93,7 @@ class App extends Component {
 		}
 
 		return (
-			<div className={classes.App}>
+			<Aux>
 				<button
 					onClick={() => {
 						this.setState({ showCockpit: false });
@@ -100,15 +105,15 @@ class App extends Component {
 					<Cockpit
 						title={this.props.appTitle}
 						showPersons={this.state.showPersons}
-						persons={this.state.persons}
+						personsLength={this.state.persons.length}
 						clicked={this.togglePersonsHandler}
 					/>
 				) : null}
 				{persons}
-			</div>
+			</Aux>
 		);
 		// return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
 	}
 }
 
-export default App;
+export default withClass(App, classes.App);

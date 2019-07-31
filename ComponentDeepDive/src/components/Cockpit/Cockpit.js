@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classes from "./Cockpit.css";
 
 const cockpit = props => {
+	useEffect(() => {
+		console.log("[Cockpit.js] useEffect");
+		setTimeout(() => {
+			alert("This is an alert");
+		}, 1000);
+		return () => {
+			console.log("[Cockpit.js] cleanup");
+		};
+	}, []);
+
+	useEffect(() => {
+		console.log("[Cockpit.js] 2nd useEffect ");
+		return () => {
+			console.log("[Cockpit.js] 2nd useEffect Cleanup");
+		};
+	});
 	const assignedClasses = [];
 	if (props.persons.length <= 2) {
 		assignedClasses.push(classes.red);
